@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://Debug2018.github.io/favicon.ico?v=1558868964246">
+<link rel="shortcut icon" href="https://Debug2018.github.io/favicon.ico?v=1558869240287">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://Debug2018.github.io/styles/main.css">
 
@@ -30,7 +30,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://Debug2018.github.io">
-        <img src="https://Debug2018.github.io/images/avatar.png?v=1558868964246" class="site-logo">
+        <img src="https://Debug2018.github.io/images/avatar.png?v=1558869240287" class="site-logo">
         <h1 class="site-title">七号玩家</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -102,6 +102,39 @@
               <p>公众号被封，文章备份只有这一张长截屏了。</p>
 <!--more-->
 <p><img src="https://Debug2018.github.io/post-images/1558868854339.jpg" alt=""></p>
+<h2 id="代码如下">代码如下：</h2>
+<pre><code>function autoPlay() {
+    var play = document.getElementById(&quot;playButton&quot;);
+    var speed = document.getElementsByClassName(&quot;speedTab15&quot;)[0];
+    var passTime = document.getElementsByClassName(&quot;passTime&quot;)[0].style.width;
+    console.log(&quot;当前视频进度：:&quot; + passTime);
+    speed.click();
+    play.click();
+}
+
+autoPlay()
+
+setInterval(function () {
+    var isNest = document.getElementsByClassName(&quot;passTime&quot;)[0].style.width;
+    var cancle = document.getElementsByClassName(&quot;popbtn_cancel&quot;);
+    if (cancle.length &gt; 0) {
+        console.log(&quot;检测到问题弹窗&quot;)
+        document.getElementById('tmDialog_iframe').contentWindow.document.getElementsByTagName(&quot;label&quot;)[0].click()
+        cancle[0].click();
+    }
+    console.log(&quot;当前进度(每隔五秒刷新一次)：&quot; + isNest);
+    if (isNest === '100%') {
+        var nextBtn = document.getElementById(&quot;nextBtn&quot;);
+        nextBtn.click();
+        console.log(&quot;2秒后1.5倍速 流畅 播放&quot;);
+        setTimeout(function () {
+            var speed = document.getElementsByClassName(&quot;speedTab15&quot;)[0];
+            speed.click();
+        }, 2000)
+    }
+}, 5000);
+
+</code></pre>
 
             </div>
             
