@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Debug2018.github.io</id>
     <title>七号玩家</title>
-    <updated>2019-05-26T13:22:23.867Z</updated>
+    <updated>2019-05-27T15:53:24.732Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Debug2018.github.io"/>
     <link rel="self" href="https://Debug2018.github.io/atom.xml"/>
@@ -10,6 +10,38 @@
     <logo>https://Debug2018.github.io/images/avatar.png</logo>
     <icon>https://Debug2018.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 七号玩家</rights>
+    <entry>
+        <title type="html"><![CDATA[Python爬虫之Android反编译初探]]></title>
+        <id>https://Debug2018.github.io/post/android-fan-bian-yi</id>
+        <link href="https://Debug2018.github.io/post/android-fan-bian-yi">
+        </link>
+        <updated>2019-05-27T15:11:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>最近想在某app抓取一些数据，通过Chars抓包后发现参数还是有些复杂的吗，但从Chars上看到的根本无法拿到数据，于是就拿出了逆向工程大法，当然这个app是没有套壳加密的。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>最近想在某app抓取一些数据，通过Chars抓包后发现参数还是有些复杂的吗，但从Chars上看到的根本无法拿到数据，于是就拿出了逆向工程大法，当然这个app是没有套壳加密的。</p>
+<!-- more -->
+<h2 id="一-前言">一、前言</h2>
+<p>最近想在某app抓取一些数据，通过Chars抓包后发现参数还是有些复杂的吗，但从Chars上看到的根本无法拿到数据，于是就拿出了逆向工程大法，当然这个app是没有套壳加密的。</p>
+<h2 id="二-使用工具jadx">二、使用工具jadx</h2>
+<p>jadx是一个开源项目，可以在<a href="https://github.com/skylot/jadx">Github jadx</a>查看。简单的使用方法里面也有介绍，安装完成后使用下方命令即可。
+<a href="https://bintray.com/skylot/jadx/unstable/v0.9.0-b1059-123ba2ba#files">下载地址</a></p>
+<pre><code>cd build/jadx/
+bin/jadx -d out lib/jadx-core-*.jar
+# or
+bin/jadx-gui lib/jadx-core-*.jar
+</code></pre>
+<h2 id="三-解压apk">三、解压APK</h2>
+<ol>
+<li>把apk传到电脑后，修改后缀为.zip，直接解压可以看到.dex后缀的文件。
+<img src="https://Debug2018.github.io/post-images/1558970978888.png" alt="解压截图"></li>
+</ol>
+<h3 id="四-使用jadx">四、使用jadx</h3>
+<p>首先将第三步解压出来的dex文件复制到jadx的安装目录下，然后在安装目录下使用命令<code>jadx -d out classes.dex</code>。当然也可以直接指定全路径。之后在当前目录就可以看到反编译后的文件的，可以在VS Code或者其它编辑器中打开这个文件夹之后采用关键字检索就可以查找相应的算法了。
+<img src="https://Debug2018.github.io/post-images/1558971138931.png" alt="命令截图"></p>
+<h2 id="五-总结">五、总结</h2>
+<p>这是第一次使用jadx，确实很好用。之前有用过AndroidKiller不过反编译出来的代码还要学点smali语法才看得懂。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[如何优雅的刷智慧树(备份)]]></title>
         <id>https://Debug2018.github.io/post/zhu</id>

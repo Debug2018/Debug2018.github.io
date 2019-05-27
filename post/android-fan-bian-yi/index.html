@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>测试文章 | 七号玩家</title>
+<title>Python爬虫之Android反编译初探 | 七号玩家</title>
 <meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -92,18 +92,55 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">测试文章</h2>
-            <div class="post-date">2019-05-26</div>
+            <h2 class="post-title">Python爬虫之Android反编译初探</h2>
+            <div class="post-date">2019-05-27</div>
             
-              <div class="feature-container" style="background-image: url('https://Debug2018.github.io/post-images/ce-shi-yi-xia.jpg')">
+              <div class="feature-container" style="background-image: url('https://Debug2018.github.io/post-images/android-fan-bian-yi.jpg')">
               </div>
             
             <div class="post-content">
-              <p>#一级标题
-##二级标题</p>
+              <p>最近想在某app抓取一些数据，通过Chars抓包后发现参数还是有些复杂的吗，但从Chars上看到的根本无法拿到数据，于是就拿出了逆向工程大法，当然这个app是没有套壳加密的。</p>
+<!-- more -->
+<h2 id="一-前言">一、前言</h2>
+<p>最近想在某app抓取一些数据，通过Chars抓包后发现参数还是有些复杂的吗，但从Chars上看到的根本无法拿到数据，于是就拿出了逆向工程大法，当然这个app是没有套壳加密的。</p>
+<h2 id="二-使用工具jadx">二、使用工具jadx</h2>
+<p>jadx是一个开源项目，可以在<a href="https://github.com/skylot/jadx">Github jadx</a>查看。简单的使用方法里面也有介绍，安装完成后使用下方命令即可。
+<a href="https://bintray.com/skylot/jadx/unstable/v0.9.0-b1059-123ba2ba#files">下载地址</a></p>
+<pre><code>cd build/jadx/
+bin/jadx -d out lib/jadx-core-*.jar
+# or
+bin/jadx-gui lib/jadx-core-*.jar
+</code></pre>
+<h2 id="三-解压apk">三、解压APK</h2>
+<ol>
+<li>把apk传到电脑后，修改后缀为.zip，直接解压可以看到.dex后缀的文件。
+<img src="https://Debug2018.github.io/post-images/1558970978888.png" alt="解压截图"></li>
+</ol>
+<h3 id="四-使用jadx">四、使用jadx</h3>
+<p>首先将第三步解压出来的dex文件复制到jadx的安装目录下，然后在安装目录下使用命令<code>jadx -d out classes.dex</code>。当然也可以直接指定全路径。之后在当前目录就可以看到反编译后的文件的，可以在VS Code或者其它编辑器中打开这个文件夹之后采用关键字检索就可以查找相应的算法了。
+<img src="https://Debug2018.github.io/post-images/1558971138931.png" alt="命令截图"></p>
+<h2 id="五-总结">五、总结</h2>
+<p>这是第一次使用jadx，确实很好用。之前有用过AndroidKiller不过反编译出来的代码还要学点smali语法才看得懂。</p>
 
             </div>
             
+              <div class="tag-container">
+                
+                  <a href="https://Debug2018.github.io/tag/eYC4euZTv" class="tag">
+                    爬虫
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://Debug2018.github.io/post/zhu">
+                  <h3 class="post-title">
+                    如何优雅的刷智慧树(备份)
+                  </h3>
+                </a>
+              </div>
             
 
             
