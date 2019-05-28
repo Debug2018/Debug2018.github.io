@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Debug2018.github.io</id>
     <title>七号玩家</title>
-    <updated>2019-05-28T07:58:40.696Z</updated>
+    <updated>2019-05-28T07:59:40.414Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Debug2018.github.io"/>
     <link rel="self" href="https://Debug2018.github.io/atom.xml"/>
@@ -11,7 +11,7 @@
     <icon>https://Debug2018.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 七号玩家</rights>
     <entry>
-        <title type="html"><![CDATA[Python爬虫之Android反编译初探]]></title>
+        <title type="html"><![CDATA[Python爬虫之初探Android反编译]]></title>
         <id>https://Debug2018.github.io/post/android-fan-bian-yi</id>
         <link href="https://Debug2018.github.io/post/android-fan-bian-yi">
         </link>
