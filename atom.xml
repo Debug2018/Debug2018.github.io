@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Debug2018.github.io</id>
     <title>七号玩家</title>
-    <updated>2019-05-28T07:59:40.414Z</updated>
+    <updated>2019-05-28T08:17:37.090Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Debug2018.github.io"/>
     <link rel="self" href="https://Debug2018.github.io/atom.xml"/>
@@ -10,6 +10,18 @@
     <logo>https://Debug2018.github.io/images/avatar.png</logo>
     <icon>https://Debug2018.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 七号玩家</rights>
+    <entry>
+        <title type="html"><![CDATA[青果教务系统验证码自动识别TensorFlow]]></title>
+        <id>https://Debug2018.github.io/post/VCqalOimB</id>
+        <link href="https://Debug2018.github.io/post/VCqalOimB">
+        </link>
+        <updated>2019-05-28T08:16:34.000Z</updated>
+        <summary type="html"><![CDATA[<p>青果教务系统验证码自动识别TensorFlow</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>青果教务系统验证码自动识别TensorFlow</p>
+<!-- more -->
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Python爬虫之初探Android反编译]]></title>
         <id>https://Debug2018.github.io/post/android-fan-bian-yi</id>
@@ -43,11 +55,158 @@ bin/jadx-gui lib/jadx-core-*.jar
 ]]></content>
     </entry>
     <entry>
+        <title type="html"><![CDATA[智慧树自助答题]]></title>
+        <id>https://Debug2018.github.io/post/YB0Gt7nPE</id>
+        <link href="https://Debug2018.github.io/post/YB0Gt7nPE">
+        </link>
+        <updated>2019-04-25T08:07:16.000Z</updated>
+        <summary type="html"><![CDATA[<p>鉴于这学期选修的智慧树网课实在有点多（4门），章节测试期末考试一道一道找答案确实费劲，于是就一把梭写了个js版的做题助手，下学期打算重新写个油猴脚本的版本，这样使用会更方便些。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>鉴于这学期选修的智慧树网课实在有点多（4门），章节测试期末考试一道一道找答案确实费劲，于是就一把梭写了个js版的做题助手，下学期打算重新写个油猴脚本的版本，这样使用会更方便些。</p>
+<!-- more -->
+<h3 id="一-前言">一、前言</h3>
+<p>鉴于这学期选修的智慧树网课实在有点多（4门），章节测试期末考试一道一道找答案确实费劲，于是就一把梭写了个js版的做题助手，下学期打算重新写个油猴脚本的版本，这样使用会更方便些。</p>
+<h3 id="二-使用方法">二、使用方法</h3>
+<p>在章节测试或者期末考试页面直接在控制台粘贴代码就ok了。</p>
+<h3 id="三-完整代码">三、完整代码</h3>
+<pre><code>function formatParams(data) {
+    var arr = [];
+    for (var name in data) {
+        arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+    };
+    return arr.join('&amp;');
+}
+
+function handelType(type) {
+    //0 单选题 1 多选题 2 判断题
+    if (!type) return 4;
+    var code = type.search(&quot;单选题&quot;);
+    if (code !== -1) return 0;
+
+    code = type.search(&quot;多选题&quot;);
+    if (code !== -1) return 1;
+
+    code = type.search(&quot;判断题&quot;);
+    if (code !== -1) return 2;
+
+    code = type.search(&quot;阅读理解（选择）/完型填空&quot;);
+    if (code !== -1) return 3;
+
+    return 4;//其它题型
+}
+
+
+function handleText(type, selectList, data, index) {
+    var list = data.split(&quot;#&quot;);
+    var ques = list[0];
+    var ans = list[1];
+    this.reData.push({ ques: ques, ans: ans, index: index + 1 })
+    var typeCode = handelType(type);
+    for (var j = 0; j &lt; selectList.length; j++) {
+        var select = selectList[j].querySelector('.node_detail');
+        var selectText = select.innerText.trim();
+        //单选题
+        if (typeCode === 0) {
+            if (ans.includes(selectText)) {
+                select.click();
+            }
+        }
+        //多选题
+        if (typeCode === 1) {
+            if (ans.includes(selectText)) {
+                select.click();
+            }
+
+        }
+        //判断题
+        if (typeCode === 2) {
+            if (ans.search('正确|是|对|√') !== -1) {
+                if (selectText.search('正确|是|对|√') !== -1) {
+                    select.click();
+                }
+            } else {
+                if (selectText.search('错误|否|错|×') !== -1) {
+                    select.click();
+                }
+            }
+
+        }
+        //阅读理解 or 完型填空
+        if (typeCode === 3) {
+            if (ans.search(selectText) !== -1) {
+                select.click();
+            }
+        }
+    }
+
+
+}
+
+
+function Ajax(type, data, selectList, index) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) {
+            //setTimeout(handleText(type, selectList, xmlhttp.responseText, index), Math.ceil(Math.random() * 20) * 1000)
+            handleText(type, selectList, xmlhttp.responseText, index)
+
+        }
+    }
+    var url = &quot;https://i7code.cn/zhs?&quot; + formatParams(data)
+    xmlhttp.open(&quot;GET&quot;, url, true);
+    xmlhttp.send();
+}
+
+function consoleReData(data) {
+    console.log(&quot;*********************************************&quot;)
+    var data = data.sort(function (a, b) {
+        return a.index - b.index;
+    })
+    for (var i = 0; i &lt; data.length; i++) {
+        console.log(data[i].index + &quot;.&quot; + data[i].ques)
+        console.log(data[i].ans)
+        console.log(&quot; &quot;)
+    }
+}
+
+var reData = []
+
+
+var data = document.querySelectorAll('.examPaper_subject');
+console.log(&quot;开始考试&quot;)
+
+for (var i = 0; i &lt; data.length; i++) {
+    var type = data[i].querySelector('.subject_type');
+    if (type) {
+        type = type.innerText.trim()
+    }
+    var question = data[i].querySelector('.subject_describe');
+    if (question) {
+        question = question.innerText.trim();
+    }
+    console.log(question);
+    var selectList = data[i].querySelectorAll('.nodeLab');
+    setTimeout(Ajax(type, { 'question': question }, selectList, i), Math.ceil(Math.random() * 100) * 1000);
+}
+
+var isFinish = setInterval(function () {
+    if (reData.length === data.length) {
+        setTimeout(() =&gt; {
+            consoleReData(reData);
+        }, 1000);
+        clearInterval(isFinish)
+
+    }
+}, 1000)
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[如何优雅的刷智慧树(备份)]]></title>
         <id>https://Debug2018.github.io/post/zhu</id>
         <link href="https://Debug2018.github.io/post/zhu">
         </link>
-        <updated>2019-05-26T11:06:31.000Z</updated>
+        <updated>2019-04-20T11:06:31.000Z</updated>
         <summary type="html"><![CDATA[<p>公众号被封，文章备份只有这一张长截屏了。</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>公众号被封，文章备份只有这一张长截屏了。</p>
@@ -86,22 +245,6 @@ setInterval(function () {
 }, 5000);
 
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[测试文章]]></title>
-        <id>https://Debug2018.github.io/post/ce-shi-yi-xia</id>
-        <link href="https://Debug2018.github.io/post/ce-shi-yi-xia">
-        </link>
-        <updated>2019-05-26T09:14:21.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="一级标题">一级标题</h1>
-<h2 id="二级标题">二级标题</h2>
-<ul>
-<li>数据实打实爱的</li>
-<li>撒旦撒看到</li>
-<li>萨达萨达萨达</li>
-<li>萨达萨达 撒打撒打撒大撒的卡拉实打实的</li>
-</ul>
 ]]></content>
     </entry>
 </feed>
