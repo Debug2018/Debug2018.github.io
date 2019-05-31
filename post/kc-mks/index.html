@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>标签列表 | 七号玩家</title>
+<title>课程中心 马克思 | 七号玩家</title>
 <meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -91,14 +91,94 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="tag-list-title">标签列表</h2>
-          <div class="tags-container">
+          <div class="post-detail">
+            <h2 class="post-title">课程中心 马克思</h2>
+            <div class="post-date">2019-05-31</div>
             
-              <a class="tag" href="https://Debug2018.github.io/tag/eYC4euZTv">爬虫</a>
+            <div class="post-content">
+              <h3 id="一-使用方法">一、使用方法</h3>
+<p>开始考试后打开F12 粘贴下方代码回车等待一小段时间后即可看到答案
+<img src="https://Debug2018.github.io/post-images/1559273942481.png" alt=""></p>
+<h3 id="二-附">二、附</h3>
+<p><a href="https://i7code.cn/a">查题地址</a></p>
+<pre><code>function formatParams(data) {
+    var arr = [];
+    for (var name in data) {
+        arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+    }
+    return arr.join('&amp;');
+}
+
+function handleText(data, index) {
+    var list = data.split(&quot;#&quot;);
+    var ques = list[0];
+    var ans = list[1];
+    this.reData.push({ ques: ques, ans: ans, index: index + 1 });
+}
+
+
+function Ajax(data, index) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) {
+            handleText(xmlhttp.responseText, index);
+        }
+    }
+    var url = &quot;https://i7code.cn/zhs?&quot; + formatParams(data);
+    xmlhttp.open(&quot;GET&quot;, url, true);
+    xmlhttp.send();
+}
+
+function consoleReData(data) {
+    console.log(&quot;*********************************************&quot;)
+    var data = data.sort(function (a, b) {
+        return a.index - b.index;
+    })
+    for (var i = 0; i &lt; data.length; i++) {
+        console.log(data[i].index + &quot;.&quot; + data[i].ques)
+        console.log(data[i].ans);
+        console.log();
+    }
+}
+
+var reData = [];
+
+var data = document.querySelectorAll('.issue_box');
+console.log(&quot;开始考试,检索答案中...&quot;);
+
+for (var i = 0; i &lt; data.length; i++) {
+    var question = data[i].innerText.trim().replace(&quot;\n&quot;, &quot;&quot;).replace(&quot;\t&quot;, &quot;&quot;).replace(&quot;【填空题】&quot;, &quot;&quot;).trim();
+    console.log(question);
+    setTimeout(Ajax({ 'question': question }, i), Math.ceil(Math.random() * 30) * 1000);
+}
+
+var isFinish = setInterval(function () {
+    if (reData.length === data.length) {
+        setTimeout(() =&gt; {
+            consoleReData(reData);
+        }, 1000);
+        clearInterval(isFinish);
+    }
+}, 1000)
+</code></pre>
+
+            </div>
             
-              <a class="tag" href="https://Debug2018.github.io/tag/nMvcy28PY">智慧树</a>
             
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://Debug2018.github.io/post/android-fan-bian-yi">
+                  <h3 class="post-title">
+                    Python爬虫之初探Android反编译
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
           </div>
+
         </div>
       </div>
     </div>
