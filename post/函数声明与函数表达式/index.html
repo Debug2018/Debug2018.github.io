@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" >
 
-<title>如何优雅的刷智慧树(备份) | 七号玩家</title>
+<title>函数声明与函数表达式 | 七号玩家</title>
 <meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://Debug2018.github.io/favicon.ico?v=1559274085722">
+<link rel="shortcut icon" href="https://Debug2018.github.io/favicon.ico?v=1560856504000">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://Debug2018.github.io/styles/main.css">
 
@@ -30,7 +30,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://Debug2018.github.io">
-        <img src="https://Debug2018.github.io/images/avatar.png?v=1559274085722" class="site-logo">
+        <img src="https://Debug2018.github.io/images/avatar.png?v=1560856504000" class="site-logo">
         <h1 class="site-title">七号玩家</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -92,66 +92,73 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">如何优雅的刷智慧树(备份)</h2>
-            <div class="post-date">2019-04-20</div>
-            
-              <div class="feature-container" style="background-image: url('https://Debug2018.github.io/post-images/zhu.jpg')">
-              </div>
+            <h2 class="post-title">函数声明与函数表达式</h2>
+            <div class="post-date">2019-06-11</div>
             
             <div class="post-content">
-              <p>公众号被封，文章备份只有这一张长截屏了。</p>
-<!--more-->
-<p><img src="https://Debug2018.github.io/post-images/1558868854339.jpg" alt=""></p>
-<h2 id="代码如下">代码如下：</h2>
-<pre><code>function autoPlay() {
-    var play = document.getElementById(&quot;playButton&quot;);
-    var speed = document.getElementsByClassName(&quot;speedTab15&quot;)[0];
-    var passTime = document.getElementsByClassName(&quot;passTime&quot;)[0].style.width;
-    console.log(&quot;当前视频进度：:&quot; + passTime);
-    speed.click();
-    play.click();
-}
-
-autoPlay()
-
-setInterval(function () {
-    var isNest = document.getElementsByClassName(&quot;passTime&quot;)[0].style.width;
-    var cancle = document.getElementsByClassName(&quot;popbtn_cancel&quot;);
-    if (cancle.length &gt; 0) {
-        console.log(&quot;检测到问题弹窗&quot;)
-        document.getElementById('tmDialog_iframe').contentWindow.document.getElementsByTagName(&quot;label&quot;)[0].click()
-        cancle[0].click();
-    }
-    console.log(&quot;当前进度(每隔五秒刷新一次)：&quot; + isNest);
-    if (isNest === '100%') {
-        var nextBtn = document.getElementById(&quot;nextBtn&quot;);
-        nextBtn.click();
-        console.log(&quot;2秒后1.5倍速 流畅 播放&quot;);
-        setTimeout(function () {
-            var speed = document.getElementsByClassName(&quot;speedTab15&quot;)[0];
-            speed.click();
-        }, 2000)
-    }
-}, 5000);
-
+              <p>一道JavaScript面试题的思考</p>
+<!-- more -->
+<h2 id="问题">问题</h2>
+<p>偶然在网上看到这么一道面试题，现记录下来以便参考。</p>
+<blockquote>
+<p>问：以下代码的输出结果是什么？</p>
+</blockquote>
+<pre><code>var a = 1;
+(function a(){
+a = 2;
+console.log(a)})()
 </code></pre>
+<p>如果你试着在控制台执行那么得到的结果会是函数a本身</p>
+<pre><code>ƒ a(){
+a = 2;
+console.log(a)}
+</code></pre>
+<h2 id="探讨分析">探讨分析</h2>
+<p>如果你知道函数声明和函数表达式的区别就很好理解了，让我们重新审视一下这道题目</p>
+<pre><code>var a = 1;
+(function a(){
+a = 2;
+console.log(a)})()
+</code></pre>
+<p><a href=""></a>
+首先函数a是一个<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/%E7%AB%8B%E5%8D%B3%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F">立即调用函数表达式（IIFE）
+</a>，既它是一个函数表达式，而非函数声明。</p>
+<h2 id="函数表达式和函数声明">函数表达式和函数声明</h2>
+<p><strong>声明函数有以下两种方式</strong></p>
+<ul>
+<li>函数声明</li>
+</ul>
+<pre><code>function foo() {
+  console.log('I am foo')
+}
+</code></pre>
+<p>*函数表达式</p>
+<pre><code>var bar = function foo() {
+  console.log('I am foo')
+}
+</code></pre>
+<p>匿名函数、立即执行函数也是函数表达式</p>
+<pre><code>// 匿名函数表达式
+(function() {
+  console.log('I am foo')
+})()
+
+// 立即执行函数
+(function foo() {
+  console.log('I am foo')
+})()
+</code></pre>
+<p><strong>在函数表达式内部有一个特殊的变量，该变量和函数名相同，指向函数本身，并无法被修改</strong></p>
+<h3 id="参考资料">参考资料</h3>
 
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://Debug2018.github.io/tag/nMvcy28PY" class="tag">
-                    智慧树
-                  </a>
-                
-              </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://Debug2018.github.io/post/VCqalOimB">
+                <a href="https://Debug2018.github.io/post/OBR0KFVO-">
                   <h3 class="post-title">
-                    青果教务系统验证码自动识别TensorFlow
+                    数据库系统概论复习纲要
                   </h3>
                 </a>
               </div>

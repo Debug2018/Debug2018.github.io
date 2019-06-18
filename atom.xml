@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Debug2018.github.io</id>
     <title>七号玩家</title>
-    <updated>2019-05-31T03:56:38.303Z</updated>
+    <updated>2019-06-18T11:15:05.299Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Debug2018.github.io"/>
     <link rel="self" href="https://Debug2018.github.io/atom.xml"/>
@@ -11,76 +11,80 @@
     <icon>https://Debug2018.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 七号玩家</rights>
     <entry>
-        <title type="html"><![CDATA[课程中心 马克思]]></title>
-        <id>https://Debug2018.github.io/post/kc-mks</id>
-        <link href="https://Debug2018.github.io/post/kc-mks">
+        <title type="html"><![CDATA[函数声明与函数表达式]]></title>
+        <id>https://Debug2018.github.io/post/函数声明与函数表达式</id>
+        <link href="https://Debug2018.github.io/post/函数声明与函数表达式">
         </link>
-        <updated>2019-05-31T03:33:44.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-使用方法">一、使用方法</h3>
-<p>开始考试后打开F12 粘贴下方代码回车等待一小段时间后即可看到答案
-<img src="https://Debug2018.github.io/post-images/1559273942481.png" alt=""></p>
-<h3 id="二-附">二、附</h3>
-<p><a href="https://i7code.cn/a">查题地址</a></p>
-<pre><code>function formatParams(data) {
-    var arr = [];
-    for (var name in data) {
-        arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
-    }
-    return arr.join('&amp;');
-}
-
-function handleText(data, index) {
-    var list = data.split(&quot;#&quot;);
-    var ques = list[0];
-    var ans = list[1];
-    this.reData.push({ ques: ques, ans: ans, index: index + 1 });
-}
-
-
-function Ajax(data, index) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) {
-            handleText(xmlhttp.responseText, index);
-        }
-    }
-    var url = &quot;https://i7code.cn/zhs?&quot; + formatParams(data);
-    xmlhttp.open(&quot;GET&quot;, url, true);
-    xmlhttp.send();
-}
-
-function consoleReData(data) {
-    console.log(&quot;*********************************************&quot;)
-    var data = data.sort(function (a, b) {
-        return a.index - b.index;
-    })
-    for (var i = 0; i &lt; data.length; i++) {
-        console.log(data[i].index + &quot;.&quot; + data[i].ques)
-        console.log(data[i].ans);
-        console.log();
-    }
-}
-
-var reData = [];
-
-var data = document.querySelectorAll('.issue_box');
-console.log(&quot;开始考试,检索答案中...&quot;);
-
-for (var i = 0; i &lt; data.length; i++) {
-    var question = data[i].innerText.trim().replace(&quot;\n&quot;, &quot;&quot;).replace(&quot;\t&quot;, &quot;&quot;).replace(&quot;【填空题】&quot;, &quot;&quot;).trim();
-    console.log(question);
-    setTimeout(Ajax({ 'question': question }, i), Math.ceil(Math.random() * 30) * 1000);
-}
-
-var isFinish = setInterval(function () {
-    if (reData.length === data.length) {
-        setTimeout(() =&gt; {
-            consoleReData(reData);
-        }, 1000);
-        clearInterval(isFinish);
-    }
-}, 1000)
+        <updated>2019-06-11T11:22:46.000Z</updated>
+        <summary type="html"><![CDATA[<p>一道JavaScript面试题的思考</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>一道JavaScript面试题的思考</p>
+<!-- more -->
+<h2 id="问题">问题</h2>
+<p>偶然在网上看到这么一道面试题，现记录下来以便参考。</p>
+<blockquote>
+<p>问：以下代码的输出结果是什么？</p>
+</blockquote>
+<pre><code>var a = 1;
+(function a(){
+a = 2;
+console.log(a)})()
 </code></pre>
+<p>如果你试着在控制台执行那么得到的结果会是函数a本身</p>
+<pre><code>ƒ a(){
+a = 2;
+console.log(a)}
+</code></pre>
+<h2 id="探讨分析">探讨分析</h2>
+<p>如果你知道函数声明和函数表达式的区别就很好理解了，让我们重新审视一下这道题目</p>
+<pre><code>var a = 1;
+(function a(){
+a = 2;
+console.log(a)})()
+</code></pre>
+<p><a href=""></a>
+首先函数a是一个<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/%E7%AB%8B%E5%8D%B3%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F">立即调用函数表达式（IIFE）
+</a>，既它是一个函数表达式，而非函数声明。</p>
+<h2 id="函数表达式和函数声明">函数表达式和函数声明</h2>
+<p><strong>声明函数有以下两种方式</strong></p>
+<ul>
+<li>函数声明</li>
+</ul>
+<pre><code>function foo() {
+  console.log('I am foo')
+}
+</code></pre>
+<p>*函数表达式</p>
+<pre><code>var bar = function foo() {
+  console.log('I am foo')
+}
+</code></pre>
+<p>匿名函数、立即执行函数也是函数表达式</p>
+<pre><code>// 匿名函数表达式
+(function() {
+  console.log('I am foo')
+})()
+
+// 立即执行函数
+(function foo() {
+  console.log('I am foo')
+})()
+</code></pre>
+<p><strong>在函数表达式内部有一个特殊的变量，该变量和函数名相同，指向函数本身，并无法被修改</strong></p>
+<h3 id="参考资料">参考资料</h3>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[数据库系统概论复习纲要]]></title>
+        <id>https://Debug2018.github.io/post/OBR0KFVO-</id>
+        <link href="https://Debug2018.github.io/post/OBR0KFVO-">
+        </link>
+        <updated>2019-05-28T11:01:53.000Z</updated>
+        <summary type="html"><![CDATA[<p>数据库系统概况纲要</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>数据库系统概况纲要</p>
+<!--more-->
+<h3 id="一-数据库基础知识">一、数据库基础知识</h3>
 ]]></content>
     </entry>
     <entry>
@@ -259,52 +263,6 @@ var isFinish = setInterval(function () {
 
     }
 }, 1000)
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[如何优雅的刷智慧树(备份)]]></title>
-        <id>https://Debug2018.github.io/post/zhu</id>
-        <link href="https://Debug2018.github.io/post/zhu">
-        </link>
-        <updated>2019-04-20T11:06:31.000Z</updated>
-        <summary type="html"><![CDATA[<p>公众号被封，文章备份只有这一张长截屏了。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>公众号被封，文章备份只有这一张长截屏了。</p>
-<!--more-->
-<p><img src="https://Debug2018.github.io/post-images/1558868854339.jpg" alt=""></p>
-<h2 id="代码如下">代码如下：</h2>
-<pre><code>function autoPlay() {
-    var play = document.getElementById(&quot;playButton&quot;);
-    var speed = document.getElementsByClassName(&quot;speedTab15&quot;)[0];
-    var passTime = document.getElementsByClassName(&quot;passTime&quot;)[0].style.width;
-    console.log(&quot;当前视频进度：:&quot; + passTime);
-    speed.click();
-    play.click();
-}
-
-autoPlay()
-
-setInterval(function () {
-    var isNest = document.getElementsByClassName(&quot;passTime&quot;)[0].style.width;
-    var cancle = document.getElementsByClassName(&quot;popbtn_cancel&quot;);
-    if (cancle.length &gt; 0) {
-        console.log(&quot;检测到问题弹窗&quot;)
-        document.getElementById('tmDialog_iframe').contentWindow.document.getElementsByTagName(&quot;label&quot;)[0].click()
-        cancle[0].click();
-    }
-    console.log(&quot;当前进度(每隔五秒刷新一次)：&quot; + isNest);
-    if (isNest === '100%') {
-        var nextBtn = document.getElementById(&quot;nextBtn&quot;);
-        nextBtn.click();
-        console.log(&quot;2秒后1.5倍速 流畅 播放&quot;);
-        setTimeout(function () {
-            var speed = document.getElementsByClassName(&quot;speedTab15&quot;)[0];
-            speed.click();
-        }, 2000)
-    }
-}, 5000);
-
 </code></pre>
 ]]></content>
     </entry>
