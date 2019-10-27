@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Debug2018.github.io</id>
     <title>七号玩家</title>
-    <updated>2019-10-27T02:43:44.185Z</updated>
+    <updated>2019-10-27T02:44:49.809Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Debug2018.github.io"/>
     <link rel="self" href="https://Debug2018.github.io/atom.xml"/>
@@ -76,6 +76,79 @@ console.log(a)})()
 ]]></content>
     </entry>
     <entry>
+        <title type="html"><![CDATA[课程中心 马克思]]></title>
+        <id>https://Debug2018.github.io/post/kc-mks</id>
+        <link href="https://Debug2018.github.io/post/kc-mks">
+        </link>
+        <updated>2019-05-31T03:33:44.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="一-使用方法">一、使用方法</h3>
+<p>开始考试后打开F12 粘贴下方代码回车等待一小段时间后即可看到答案
+<img src="https://Debug2018.github.io/post-images/1559273942481.png" alt=""></p>
+<h3 id="二-附">二、附</h3>
+<p><a href="https://i7code.cn/a">查题地址</a></p>
+<pre><code>function formatParams(data) {
+    var arr = [];
+    for (var name in data) {
+        arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+    }
+    return arr.join('&amp;');
+}
+
+function handleText(data, index) {
+    var list = data.split(&quot;#&quot;);
+    var ques = list[0];
+    var ans = list[1];
+    this.reData.push({ ques: ques, ans: ans, index: index + 1 });
+}
+
+
+function Ajax(data, index) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) {
+            handleText(xmlhttp.responseText, index);
+        }
+    }
+    var url = &quot;https://i7code.cn/zhs?&quot; + formatParams(data);
+    xmlhttp.open(&quot;GET&quot;, url, true);
+    xmlhttp.send();
+}
+
+function consoleReData(data) {
+    console.log(&quot;*********************************************&quot;)
+    var data = data.sort(function (a, b) {
+        return a.index - b.index;
+    })
+    for (var i = 0; i &lt; data.length; i++) {
+        console.log(data[i].index + &quot;.&quot; + data[i].ques)
+        console.log(data[i].ans);
+        console.log();
+    }
+}
+
+var reData = [];
+
+var data = document.querySelectorAll('.issue_box');
+console.log(&quot;开始考试,检索答案中...&quot;);
+
+for (var i = 0; i &lt; data.length; i++) {
+    var question = data[i].innerText.trim().replace(&quot;\n&quot;, &quot;&quot;).replace(&quot;\t&quot;, &quot;&quot;).replace(&quot;【填空题】&quot;, &quot;&quot;).trim();
+    console.log(question);
+    setTimeout(Ajax({ 'question': question }, i), Math.ceil(Math.random() * 30) * 1000);
+}
+
+var isFinish = setInterval(function () {
+    if (reData.length === data.length) {
+        setTimeout(() =&gt; {
+            consoleReData(reData);
+        }, 1000);
+        clearInterval(isFinish);
+    }
+}, 1000)
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[数据库系统概论复习纲要]]></title>
         <id>https://Debug2018.github.io/post/OBR0KFVO-</id>
         <link href="https://Debug2018.github.io/post/OBR0KFVO-">
@@ -122,153 +195,6 @@ bin/jadx-gui lib/jadx-core-*.jar
 <img src="https://Debug2018.github.io/post-images/1558971138931.png" alt="命令截图"></p>
 <h2 id="五-总结">五、总结</h2>
 <p>这是第一次使用jadx，确实很好用。之前有用过AndroidKiller不过反编译出来的代码还要学点smali语法才看得懂。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[智慧树自助答题]]></title>
-        <id>https://Debug2018.github.io/post/YB0Gt7nPE</id>
-        <link href="https://Debug2018.github.io/post/YB0Gt7nPE">
-        </link>
-        <updated>2019-04-25T08:07:16.000Z</updated>
-        <summary type="html"><![CDATA[<p>鉴于这学期选修的智慧树网课实在有点多（4门），章节测试期末考试一道一道找答案确实费劲，于是就一把梭写了个js版的做题助手，下学期打算重新写个油猴脚本的版本，这样使用会更方便些。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>鉴于这学期选修的智慧树网课实在有点多（4门），章节测试期末考试一道一道找答案确实费劲，于是就一把梭写了个js版的做题助手，下学期打算重新写个油猴脚本的版本，这样使用会更方便些。</p>
-<!-- more -->
-<h3 id="一-前言">一、前言</h3>
-<p>鉴于这学期选修的智慧树网课实在有点多（4门），章节测试期末考试一道一道找答案确实费劲，于是就一把梭写了个js版的做题助手，下学期打算重新写个油猴脚本的版本，这样使用会更方便些。</p>
-<h3 id="二-使用方法">二、使用方法</h3>
-<p>在章节测试或者期末考试页面直接在控制台粘贴代码就ok了。</p>
-<h3 id="三-完整代码">三、完整代码</h3>
-<pre><code>function formatParams(data) {
-    var arr = [];
-    for (var name in data) {
-        arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
-    };
-    return arr.join('&amp;');
-}
-
-function handelType(type) {
-    //0 单选题 1 多选题 2 判断题
-    if (!type) return 4;
-    var code = type.search(&quot;单选题&quot;);
-    if (code !== -1) return 0;
-
-    code = type.search(&quot;多选题&quot;);
-    if (code !== -1) return 1;
-
-    code = type.search(&quot;判断题&quot;);
-    if (code !== -1) return 2;
-
-    code = type.search(&quot;阅读理解（选择）/完型填空&quot;);
-    if (code !== -1) return 3;
-
-    return 4;//其它题型
-}
-
-
-function handleText(type, selectList, data, index) {
-    var list = data.split(&quot;#&quot;);
-    var ques = list[0];
-    var ans = list[1];
-    this.reData.push({ ques: ques, ans: ans, index: index + 1 })
-    var typeCode = handelType(type);
-    for (var j = 0; j &lt; selectList.length; j++) {
-        var select = selectList[j].querySelector('.node_detail');
-        var selectText = select.innerText.trim();
-        //单选题
-        if (typeCode === 0) {
-            if (ans.includes(selectText)) {
-                select.click();
-            }
-        }
-        //多选题
-        if (typeCode === 1) {
-            if (ans.includes(selectText)) {
-                select.click();
-            }
-
-        }
-        //判断题
-        if (typeCode === 2) {
-            if (ans.search('正确|是|对|√') !== -1) {
-                if (selectText.search('正确|是|对|√') !== -1) {
-                    select.click();
-                }
-            } else {
-                if (selectText.search('错误|否|错|×') !== -1) {
-                    select.click();
-                }
-            }
-
-        }
-        //阅读理解 or 完型填空
-        if (typeCode === 3) {
-            if (ans.search(selectText) !== -1) {
-                select.click();
-            }
-        }
-    }
-
-
-}
-
-
-function Ajax(type, data, selectList, index) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) {
-            //setTimeout(handleText(type, selectList, xmlhttp.responseText, index), Math.ceil(Math.random() * 20) * 1000)
-            handleText(type, selectList, xmlhttp.responseText, index)
-
-        }
-    }
-    var url = &quot;https://i7code.cn/zhs?&quot; + formatParams(data)
-    xmlhttp.open(&quot;GET&quot;, url, true);
-    xmlhttp.send();
-}
-
-function consoleReData(data) {
-    console.log(&quot;*********************************************&quot;)
-    var data = data.sort(function (a, b) {
-        return a.index - b.index;
-    })
-    for (var i = 0; i &lt; data.length; i++) {
-        console.log(data[i].index + &quot;.&quot; + data[i].ques)
-        console.log(data[i].ans)
-        console.log(&quot; &quot;)
-    }
-}
-
-var reData = []
-
-
-var data = document.querySelectorAll('.examPaper_subject');
-console.log(&quot;开始考试&quot;)
-
-for (var i = 0; i &lt; data.length; i++) {
-    var type = data[i].querySelector('.subject_type');
-    if (type) {
-        type = type.innerText.trim()
-    }
-    var question = data[i].querySelector('.subject_describe');
-    if (question) {
-        question = question.innerText.trim();
-    }
-    console.log(question);
-    var selectList = data[i].querySelectorAll('.nodeLab');
-    setTimeout(Ajax(type, { 'question': question }, selectList, i), Math.ceil(Math.random() * 100) * 1000);
-}
-
-var isFinish = setInterval(function () {
-    if (reData.length === data.length) {
-        setTimeout(() =&gt; {
-            consoleReData(reData);
-        }, 1000);
-        clearInterval(isFinish)
-
-    }
-}, 1000)
-</code></pre>
 ]]></content>
     </entry>
     <entry>

@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Python爬虫之初探Android反编译 | 七号玩家</title>
+<title>课程中心 马克思 | 七号玩家</title>
 <link rel="shortcut icon" href="https://Debug2018.github.io/favicon.ico?v=1572144287619">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -74,45 +74,81 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Python爬虫之初探Android反编译
+              课程中心 马克思
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-05-27 ·
+                · 2019-05-31 ·
               </time>
-              
-                <a href="https://Debug2018.github.io/tag/eYC4euZTv" class="post-tag">
-                  # 爬虫
-                </a>
               
             </div>
             
-              <div class="post-feature-image" style="background-image: url('https://Debug2018.github.io/post-images/android-fan-bian-yi.jpg')">
-              </div>
-            
             <div class="post-content">
-              <p>最近想在某app抓取一些数据，通过Chars抓包后发现参数还是有些复杂的吗，但从Chars上看到的根本无法拿到数据，于是就拿出了逆向工程大法，当然这个app是没有套壳加密的。</p>
-<!-- more -->
-<h2 id="一-前言">一、前言</h2>
-<p>最近想在某app抓取一些数据，通过Chars抓包后发现参数还是有些复杂的吗，但从Chars上看到的根本无法拿到数据，于是就拿出了逆向工程大法，当然这个app是没有套壳加密的。</p>
-<h2 id="二-使用工具jadx">二、使用工具jadx</h2>
-<p>jadx是一个开源项目，可以在<a href="https://github.com/skylot/jadx">Github jadx</a>查看。简单的使用方法里面也有介绍，安装完成后使用下方命令即可。
-<a href="https://bintray.com/skylot/jadx/unstable/v0.9.0-b1059-123ba2ba#files">下载地址</a></p>
-<pre><code>cd build/jadx/
-bin/jadx -d out lib/jadx-core-*.jar
-# or
-bin/jadx-gui lib/jadx-core-*.jar
+              <h3 id="一-使用方法">一、使用方法</h3>
+<p>开始考试后打开F12 粘贴下方代码回车等待一小段时间后即可看到答案
+<img src="https://Debug2018.github.io/post-images/1559273942481.png" alt=""></p>
+<h3 id="二-附">二、附</h3>
+<p><a href="https://i7code.cn/a">查题地址</a></p>
+<pre><code>function formatParams(data) {
+    var arr = [];
+    for (var name in data) {
+        arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+    }
+    return arr.join('&amp;');
+}
+
+function handleText(data, index) {
+    var list = data.split(&quot;#&quot;);
+    var ques = list[0];
+    var ans = list[1];
+    this.reData.push({ ques: ques, ans: ans, index: index + 1 });
+}
+
+
+function Ajax(data, index) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) {
+            handleText(xmlhttp.responseText, index);
+        }
+    }
+    var url = &quot;https://i7code.cn/zhs?&quot; + formatParams(data);
+    xmlhttp.open(&quot;GET&quot;, url, true);
+    xmlhttp.send();
+}
+
+function consoleReData(data) {
+    console.log(&quot;*********************************************&quot;)
+    var data = data.sort(function (a, b) {
+        return a.index - b.index;
+    })
+    for (var i = 0; i &lt; data.length; i++) {
+        console.log(data[i].index + &quot;.&quot; + data[i].ques)
+        console.log(data[i].ans);
+        console.log();
+    }
+}
+
+var reData = [];
+
+var data = document.querySelectorAll('.issue_box');
+console.log(&quot;开始考试,检索答案中...&quot;);
+
+for (var i = 0; i &lt; data.length; i++) {
+    var question = data[i].innerText.trim().replace(&quot;\n&quot;, &quot;&quot;).replace(&quot;\t&quot;, &quot;&quot;).replace(&quot;【填空题】&quot;, &quot;&quot;).trim();
+    console.log(question);
+    setTimeout(Ajax({ 'question': question }, i), Math.ceil(Math.random() * 30) * 1000);
+}
+
+var isFinish = setInterval(function () {
+    if (reData.length === data.length) {
+        setTimeout(() =&gt; {
+            consoleReData(reData);
+        }, 1000);
+        clearInterval(isFinish);
+    }
+}, 1000)
 </code></pre>
-<h2 id="三-解压apk">三、解压APK</h2>
-<ol>
-<li>把apk传到电脑后，修改后缀为.zip，直接解压可以看到.dex后缀的文件。
-<img src="https://Debug2018.github.io/post-images/1558970978888.png" alt="解压截图"></li>
-</ol>
-<h3 id="四-使用jadx">四、使用jadx</h3>
-<p>首先将第三步解压出来的dex文件复制到jadx的安装目录下，然后在安装目录下使用命令<code>jadx -d out classes.dex</code>。当然也可以直接指定全路径。之后在当前目录就可以看到反编译后的文件的，可以在VS Code或者其它编辑器中打开这个文件夹之后采用关键字检索就可以查找相应的算法了。
-<img src="https://Debug2018.github.io/post-images/1558971138931.png" alt="命令截图"></p>
-<h2 id="五-总结">五、总结</h2>
-<p>这是第一次使用jadx，确实很好用。之前有用过AndroidKiller不过反编译出来的代码还要学点smali语法才看得懂。</p>
 
             </div>
           </article>
@@ -121,9 +157,9 @@ bin/jadx-gui lib/jadx-core-*.jar
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://Debug2018.github.io/post/zhu">
+            <a href="https://Debug2018.github.io/post/OBR0KFVO-">
               <h3 class="post-title">
-                如何优雅的刷智慧树(备份)
+                数据库系统概论复习纲要
               </h3>
             </a>
           </div>
