@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Debug2018.github.io</id>
     <title>七号玩家</title>
-    <updated>2019-06-19T13:36:08.668Z</updated>
+    <updated>2019-10-27T02:42:18.804Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Debug2018.github.io"/>
     <link rel="self" href="https://Debug2018.github.io/atom.xml"/>
@@ -268,6 +268,52 @@ var isFinish = setInterval(function () {
 
     }
 }, 1000)
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[如何优雅的刷智慧树(备份)]]></title>
+        <id>https://Debug2018.github.io/post/zhu</id>
+        <link href="https://Debug2018.github.io/post/zhu">
+        </link>
+        <updated>2019-04-20T11:06:31.000Z</updated>
+        <summary type="html"><![CDATA[<p>公众号被封，文章备份只有这一张长截屏了。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>公众号被封，文章备份只有这一张长截屏了。</p>
+<!--more-->
+<p><img src="https://Debug2018.github.io/post-images/1558868854339.jpg" alt=""></p>
+<h2 id="代码如下">代码如下：</h2>
+<pre><code>function autoPlay() {
+    var play = document.getElementById(&quot;playButton&quot;);
+    var speed = document.getElementsByClassName(&quot;speedTab15&quot;)[0];
+    var passTime = document.getElementsByClassName(&quot;passTime&quot;)[0].style.width;
+    console.log(&quot;当前视频进度：:&quot; + passTime);
+    speed.click();
+    play.click();
+}
+
+autoPlay()
+
+setInterval(function () {
+    var isNest = document.getElementsByClassName(&quot;passTime&quot;)[0].style.width;
+    var cancle = document.getElementsByClassName(&quot;popbtn_cancel&quot;);
+    if (cancle.length &gt; 0) {
+        console.log(&quot;检测到问题弹窗&quot;)
+        document.getElementById('tmDialog_iframe').contentWindow.document.getElementsByTagName(&quot;label&quot;)[0].click()
+        cancle[0].click();
+    }
+    console.log(&quot;当前进度(每隔五秒刷新一次)：&quot; + isNest);
+    if (isNest === '100%') {
+        var nextBtn = document.getElementById(&quot;nextBtn&quot;);
+        nextBtn.click();
+        console.log(&quot;2秒后1.5倍速 流畅 播放&quot;);
+        setTimeout(function () {
+            var speed = document.getElementsByClassName(&quot;speedTab15&quot;)[0];
+            speed.click();
+        }, 2000)
+    }
+}, 5000);
+
 </code></pre>
 ]]></content>
     </entry>
