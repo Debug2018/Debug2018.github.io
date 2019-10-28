@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Debug2018.github.io</id>
     <title>七号玩家</title>
-    <updated>2019-10-28T05:01:30.158Z</updated>
+    <updated>2019-10-28T05:03:00.713Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Debug2018.github.io"/>
     <link rel="self" href="https://Debug2018.github.io/atom.xml"/>
@@ -73,79 +73,6 @@ console.log(a)})()
 <p><strong>在函数表达式内部有一个特殊的变量，该变量和函数名相同，指向函数本身，并无法被修改</strong></p>
 <h3 id="参考资料">参考资料</h3>
 <p>暂无 s</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[课程中心 马克思]]></title>
-        <id>https://Debug2018.github.io/post/kc-mks</id>
-        <link href="https://Debug2018.github.io/post/kc-mks">
-        </link>
-        <updated>2019-05-31T03:33:44.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="一-使用方法">一、使用方法</h3>
-<p>开始考试后打开F12 粘贴下方代码回车等待一小段时间后即可看到答案
-<img src="https://Debug2018.github.io/post-images/1559273942481.png" alt=""></p>
-<h3 id="二-附">二、附</h3>
-<p><a href="https://i7code.cn/a">查题地址</a></p>
-<pre><code>function formatParams(data) {
-    var arr = [];
-    for (var name in data) {
-        arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
-    }
-    return arr.join('&amp;');
-}
-
-function handleText(data, index) {
-    var list = data.split(&quot;#&quot;);
-    var ques = list[0];
-    var ans = list[1];
-    this.reData.push({ ques: ques, ans: ans, index: index + 1 });
-}
-
-
-function Ajax(data, index) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) {
-            handleText(xmlhttp.responseText, index);
-        }
-    }
-    var url = &quot;https://i7code.cn/zhs?&quot; + formatParams(data);
-    xmlhttp.open(&quot;GET&quot;, url, true);
-    xmlhttp.send();
-}
-
-function consoleReData(data) {
-    console.log(&quot;*********************************************&quot;)
-    var data = data.sort(function (a, b) {
-        return a.index - b.index;
-    })
-    for (var i = 0; i &lt; data.length; i++) {
-        console.log(data[i].index + &quot;.&quot; + data[i].ques)
-        console.log(data[i].ans);
-        console.log();
-    }
-}
-
-var reData = [];
-
-var data = document.querySelectorAll('.issue_box');
-console.log(&quot;开始考试,检索答案中...&quot;);
-
-for (var i = 0; i &lt; data.length; i++) {
-    var question = data[i].innerText.trim().replace(&quot;\n&quot;, &quot;&quot;).replace(&quot;\t&quot;, &quot;&quot;).replace(&quot;【填空题】&quot;, &quot;&quot;).trim();
-    console.log(question);
-    setTimeout(Ajax({ 'question': question }, i), Math.ceil(Math.random() * 30) * 1000);
-}
-
-var isFinish = setInterval(function () {
-    if (reData.length === data.length) {
-        setTimeout(() =&gt; {
-            consoleReData(reData);
-        }, 1000);
-        clearInterval(isFinish);
-    }
-}, 1000)
-</code></pre>
 ]]></content>
     </entry>
     <entry>
